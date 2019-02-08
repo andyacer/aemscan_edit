@@ -4,9 +4,10 @@ import click
 import requests
 import xml.etree.ElementTree as ET
 
+requests.packages.urllib3.disable_warnings()
 
-def run(url):
-    response = requests.get(url + '/.feed')
+def run(url, proxy):
+    response = requests.get(url + '/.feed', proxies=proxy, verify=False, timeout=20)
     version = parse_response(response.content)
     if version:
         click.echo(click.style('AEM version: {}'.format(version), fg='green'))

@@ -11,6 +11,6 @@ class URL(click.ParamType):
         if not isinstance(value, tuple):
             value = urlparse(value)
             if value.scheme not in ('http', 'https'):
-                self.fail('invalid URL scheme (%s).  Only HTTP URLs are '
+                self.fail('invalid URL scheme (%s).  Only HTTP / HTTPS URLs are '
                           'allowed' % value.scheme, param, ctx)
         return value.scheme + '://' + value.netloc

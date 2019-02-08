@@ -4,9 +4,10 @@ import re
 import click
 import requests
 
+requests.packages.urllib3.disable_warnings()
 
-def run(url):
-    response = requests.get(url + '/non_existing')
+def run(url, proxy):
+    response = requests.get(url + '/non_existing', proxies=proxy, verify=False, timeout=20)
     banner = parse_response(response.content)
     if banner:
         click.echo(click.style('Custom error pages are not enabled, service banner: {}'.format(banner), fg='green'))

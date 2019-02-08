@@ -5,14 +5,15 @@ import click
 import string
 import requests
 
+requests.packages.urllib3.disable_warnings()
 
-def run(url):
+def run(url, proxy):
     with open(os.path.dirname(__file__) + '/../data/aem-paths.txt', 'r') as f:
         paths = map(string.strip, f.readlines())
         found = []
         with click.progressbar(paths, label='Scanning useful paths') as bar:
             for path in bar:
-                response = requests.head(url + path)
+                response = requests.head(url + path, proxies=proxy, verify=False, timeout=20)
                 if response.status_code == 200:
                     found.append(path)
     if found:

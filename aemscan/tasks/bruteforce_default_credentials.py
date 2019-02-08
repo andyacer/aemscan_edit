@@ -5,9 +5,10 @@ import click
 import string
 import requests
 
+requests.packages.urllib3.disable_warnings()
 
-def run(url):
-    response = requests.get(url + '/', auth=('baseline', 'request'))
+def run(url, proxy):
+    response = requests.get(url + '/', auth=('baseline', 'request'), proxies=proxy, verify=False, timeout=20)
     if response.status_code != 401:
 
         click.echo(click.style('AEM authentication is not available', fg='red'))
